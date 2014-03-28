@@ -1,0 +1,33 @@
+POST / HTTP/1.0
+Host: 219.142.86.183
+X-Real-IP: 221.130.33.91
+X-Forwarded-For: 221.130.33.91
+Connection: close
+Content-Type: text/xml;charset="UTF-8"
+SOAPAction: ""
+Cache-Control: no-cache
+Pragma: no-cache
+Content-Length: 785
+
+<?xml version="1.0" encoding="UTF-8"?>
+<env:Envelope xmlns:env="http://schemas.xmlsoap.org/soap/envelope/">
+    <env:Header>
+        <mm7:TransactionID xmlns:mm7="http://www.3gpp.org/ftp/Specs/archive/23_series/23.140/schema/REL-6-MM7-1-0"
+                           env:mustUnderstand="1">0311000113163140328131646302
+        </mm7:TransactionID>
+    </env:Header>
+    <env:Body>
+        <DeliveryReportReq xmlns="http://www.3gpp.org/ftp/Specs/archive/23_series/23.140/schema/REL-6-MM7-1-0">
+            <MM7Version>6.3.0</MM7Version>
+            <Sender>1065730040311600200100</Sender>
+            <Recipient>
+                <Number>+8615011215025</Number>
+            </Recipient>
+            <TimeStamp>2014-03-28T13:17:06+08:00</TimeStamp>
+            <MMSRelayServerID>960001</MMSRelayServerID>
+            <MessageID>032813164696000103109</MessageID>
+            <MMStatus>Retrieved</MMStatus>
+            <StatusText>1000</StatusText>
+        </DeliveryReportReq>
+    </env:Body>
+</env:Envelope>

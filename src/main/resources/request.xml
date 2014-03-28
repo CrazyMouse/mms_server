@@ -1,0 +1,38 @@
+Content-Type: multipart/related;boundary="--NextPart_0_2817_24856";type="text/xml";start="</tnn-200102/mm7-vasp>"
+        Content-Transfer-Encoding: 8bit
+        Authorization: Basic MzA0MDMxOmFoTHZieg==
+        SOAPAction: ""
+        MM7APIVersion: V1.5.1_20040512
+        Connection: keep-alive
+        Mime-Version: 1.0
+        Content-Length: 2020
+        Host: 172.16.9.48:8080
+        User-Agent: Apache-HttpClient/4.3.2 (java 1.5)
+        Accept-Encoding: gzip,deflate
+
+        <?xml version="1.0" encoding="UTF-8"?>
+<env:Envelope xmlns:env="http://schemas.xmlsoap.org/soap/envelope/">
+    <env:Header>
+        <mm7:TransactionID xmlns:mm7="http://www.3gpp.org/ftp/Specs/archive/23_series/23.140/schema/REL-6-MM7-1-0"
+                           env:mustUnderstand="1">1403281316460001
+        </mm7:TransactionID>
+    </env:Header>
+    <env:Body>
+        <SubmitReq xmlns="http://www.3gpp.org/ftp/Specs/archive/23_series/23.140/schema/REL-6-MM7-1-0">
+            <MM7Version>6.3.0</MM7Version>
+            <SenderIdentification>
+                <VASPID>304031</VASPID>
+                <VASID>106573004031</VASID>
+                <SenderAddress>106573004031</SenderAddress>
+            </SenderIdentification>
+            <Recipients>
+                <To>
+                    <Number>15011215025</Number>
+                </To>
+            </Recipients>
+            <ServiceCode>1600200100</ServiceCode>
+            <DeliveryReport>true</DeliveryReport>
+            <Subject>aaaaaÂàªÊÑè‰∏Ä‰∏™Êúà</Subject>
+        </SubmitReq>
+    </env:Body>
+</env:Envelope>
