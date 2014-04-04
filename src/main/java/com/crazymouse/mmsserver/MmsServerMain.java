@@ -24,7 +24,7 @@ import java.util.concurrent.atomic.AtomicLong;
 
 
 public class MmsServerMain {
-
+    public static AtomicLong submitCount = new AtomicLong(0);
     public static void main(String[] args) throws Exception {
 
         // Set up the HTTP protocol processor
@@ -53,6 +53,7 @@ public class MmsServerMain {
 
         @Override
         public void handle(org.apache.http.HttpRequest request, org.apache.http.HttpResponse response, org.apache.http.protocol.HttpContext context) throws HttpException, IOException {
+            System.out.println("Do Handle:"+MmsServerMain.submitCount.incrementAndGet());
             String method = request.getRequestLine().getMethod().toUpperCase(Locale.ENGLISH);
             if (method.equals("GET")) {
                 response.setStatusCode(HttpStatus.SC_OK);
@@ -74,9 +75,9 @@ public class MmsServerMain {
 
                         String messageID = processResp(response, submit);
                         //状态报告处理
-                        if(submit.isDeliveryReport()){
-                            processRpt(submit,messageID);
-                        }
+//                        if(submit.isDeliveryReport()){
+//                            processRpt(submit,messageID);
+//                        }
                     } catch (DocumentException e) {
                         System.out.println("数据解析错误");
                     }
@@ -86,7 +87,6 @@ public class MmsServerMain {
                 throw new MethodNotSupportedException(method + " method not supported");
             }
 
-            String target = request.getRequestLine().getUri();
         }
 
         private void processRpt(Mm7Submit submit, String messageID) {
@@ -105,6 +105,7 @@ public class MmsServerMain {
         }
 
         private String processResp(HttpResponse response, Mm7Submit submit) {
+            response.addHeader(HTTP.CONN_KEEP_ALIVE,"timeout=3");
             Namespace envSpace = new Namespace("env","http://schemas.xmlsoap.org/soap/envelope/");
             Namespace mm7Space = new Namespace("mm7","http://www.3gpp.org/ftp/Specs/archive/23_series/23.140/schema/REL-6-MM7-1-0");
             Document resp = DocumentFactory.getInstance().createDocument();
@@ -183,7 +184,7 @@ public class MmsServerMain {
                     HttpServerConnection conn = this.connFactory.createConnection(socket);
 
                     // Start worker thread
-                    Thread t = new WorkerThread(this.httpService, conn);
+                    Thread t = new WorkerThread(this.httpService, conn,false);
                     t.setDaemon(true);
                     t.start();
                 } catch (InterruptedIOException ex) {
@@ -200,11 +201,13 @@ public class MmsServerMain {
 
         private final HttpService httpservice;
         private final HttpServerConnection conn;
+        private final boolean closeConn;
 
-        public WorkerThread(final HttpService httpservice, final HttpServerConnection conn) {
+        public WorkerThread(final HttpService httpservice, final HttpServerConnection conn,boolean closeConn) {
             super();
             this.httpservice = httpservice;
             this.conn = conn;
+            this.closeConn = closeConn;
         }
 
         @Override
@@ -214,6 +217,9 @@ public class MmsServerMain {
             try {
                 while (!Thread.interrupted() && this.conn.isOpen()) {
                     this.httpservice.handleRequest(this.conn, context);
+                    if(closeConn){
+                        conn.close();
+                    }
                 }
             } catch (ConnectionClosedException ex) {
                 System.err.println("Client closed connection");
