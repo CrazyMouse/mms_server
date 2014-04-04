@@ -1,4 +1,4 @@
-package com.crazymouse.mmsserver;
+package com.crazymouse.mmsserver.Entity;
 
 import java.util.ArrayList;
 import java.util.List;

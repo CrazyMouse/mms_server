@@ -1,5 +1,6 @@
-package com.crazymouse.mmsserver;
+package com.crazymouse.mmsserver.util;
 
+import com.crazymouse.mmsserver.Entity.Mm7Deliver;
 import org.dom4j.Document;
 import org.dom4j.Element;
 import org.dom4j.Namespace;

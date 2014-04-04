@@ -1,9 +1,28 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans"
-       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:task="http://www.springframework.org/schema/task"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:task="http://www.springframework.org/schema/task"
        xmlns:context="http://www.springframework.org/schema/context"
-       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
-http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.1.xsd http://www.springframework.org/schema/task http://www.springframework.org/schema/task/spring-task.xsd http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
-    <context:property-placeholder location="mmsConfig.properties"/>
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.5.xsd
+http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.1.xsd   http://www.springframework.org/schema/task http://www.springframework.org/schema/task/spring-task.xsd">
 
+    <bean id="statistic" class="com.crazymouse.mmsserver.util.Statistic"/>
+
+    <task:scheduler id="mmsScheduler" pool-size="2"/>
+    <task:scheduled-tasks scheduler="mmsScheduler">
+        <task:scheduled ref="statistic" method="logOutSpeed" fixed-rate="1000"/>
+        <task:scheduled ref="configUtil" method="loadConf" fixed-rate="10000"/>
+    </task:scheduled-tasks>
+
+    <bean id="configUtil" class="com.crazymouse.mmsserver.util.ConfigUtil" init-method="loadConf"/>
+    <bean id="deliverProcesser" class="com.crazymouse.mmsserver.DeliverProcesser" init-method="init">
+        <property name="configUtil" ref="configUtil"/>
+    </bean>
+    <bean id="mmsReceiver" class="com.crazymouse.mmsserver.MmsReceiver" init-method="doServer">
+        <property name="configUtil" ref="configUtil"/>
+        <property name="mMsHandler" ref="mmsHandler"/>
+    </bean>
+    <bean id="mmsHandler" class="com.crazymouse.mmsserver.HttpMMsHandler">
+        <property name="deliverProcesser" ref="deliverProcesser"/>
+    </bean>
 </beans>

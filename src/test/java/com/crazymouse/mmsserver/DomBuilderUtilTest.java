@@ -1,5 +1,7 @@
 package com.crazymouse.mmsserver;
 
+import com.crazymouse.mmsserver.Entity.Mm7Deliver;
+import com.crazymouse.mmsserver.util.DomBuilderUtil;
 import junit.framework.Assert;
 
 import java.util.List;
