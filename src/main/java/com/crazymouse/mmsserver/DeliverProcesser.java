@@ -5,6 +5,7 @@ import com.crazymouse.mmsserver.Entity.Mm7Submit;
 import com.crazymouse.mmsserver.util.ConfigUtil;
 import com.crazymouse.mmsserver.util.DomBuilderUtil;
 import com.crazymouse.mmsserver.util.Statistic;
+import org.apache.http.HttpResponse;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.entity.StringEntity;
@@ -12,6 +13,7 @@ import org.apache.http.impl.client.HttpClients;
 import org.apache.http.impl.conn.PoolingHttpClientConnectionManager;
 import org.apache.http.protocol.BasicHttpContext;
 import org.apache.http.protocol.HttpContext;
+import org.apache.http.util.EntityUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -50,7 +52,8 @@ public class DeliverProcesser {
             StringEntity entity = new StringEntity(reportXml, "UTF-8");
             httpPost.setEntity(entity);
             try {
-                httpClient.execute(httpPost, context);
+                HttpResponse response = httpClient.execute(httpPost, context);
+                EntityUtils.toByteArray(response.getEntity());
                 Statistic.addDeliver();
             } catch (IOException e) {
                 logger.error("状态报告发送异常:{}", e);
