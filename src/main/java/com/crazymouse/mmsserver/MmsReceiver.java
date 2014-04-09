@@ -67,7 +67,7 @@ public class MmsReceiver {
                     Socket socket = this.serversocket.accept();
                     logger.info("Received Connection From:{}", socket.getInetAddress());
                     HttpServerConnection conn = this.connFactory.createConnection(socket);
-                    Thread t = new WorkerThread(this.httpService, conn, false);
+                    Thread t = new WorkerThread(this.httpService, conn);
                     t.setDaemon(true);
                     t.start();
                 } catch (InterruptedIOException ex) {
@@ -84,13 +84,11 @@ public class MmsReceiver {
 
         private final HttpService httpservice;
         private final HttpServerConnection conn;
-        private final boolean closeConn;
 
-        public WorkerThread(final HttpService httpservice, final HttpServerConnection conn, boolean closeConn) {
+        public WorkerThread(final HttpService httpservice, final HttpServerConnection conn) {
             super();
             this.httpservice = httpservice;
             this.conn = conn;
-            this.closeConn = closeConn;
         }
 
         @Override
@@ -99,9 +97,6 @@ public class MmsReceiver {
             try {
                 while (!Thread.interrupted() && this.conn.isOpen()) {
                     this.httpservice.handleRequest(this.conn, context);
-                    if (closeConn) {
-                        conn.close();
-                    }
                 }
             } catch (ConnectionClosedException ex) {
                 logger.info("【Client closed connection】");
