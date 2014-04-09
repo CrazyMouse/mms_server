@@ -29,9 +29,8 @@ import java.util.List;
 public class DeliverProcesser {
     private final static Logger logger = LoggerFactory.getLogger(DeliverProcesser.class);
     private ConfigUtil configUtil;
-    PoolingHttpClientConnectionManager connectionManager;
+    private PoolingHttpClientConnectionManager connectionManager;
     private HttpClient httpClient;
-    HttpPost httpPost;
 
     public void init() {
         connectionManager = new PoolingHttpClientConnectionManager();
@@ -41,7 +40,7 @@ public class DeliverProcesser {
     }
 
     public void sendDeliver(Mm7Deliver deliver) {
-        httpPost = new HttpPost(configUtil.getConfig("url"));
+        HttpPost httpPost = new HttpPost(configUtil.getConfig("url"));
         httpPost.addHeader("Content-Type", "text/xml;charset=\"UTF-8\"");
         httpPost.addHeader("Connection", "keep-alive");
 

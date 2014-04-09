@@ -24,8 +24,8 @@ import java.util.concurrent.atomic.AtomicLong;
 
 public class HttpMMsHandler implements HttpRequestHandler {
     private final static Logger logger = LoggerFactory.getLogger(HttpMMsHandler.class);
-    private static AtomicLong count = new AtomicLong(1000000000000L);
-    private String prefix = new SimpleDateFormat("yyyyMMdd").format(Calendar.getInstance().getTime());
+    private static final AtomicLong count = new AtomicLong(1000000000000L);
+    private final String prefix = new SimpleDateFormat("yyyyMMdd").format(Calendar.getInstance().getTime());
     private DeliverProcesser deliverProcesser ;
 
 
@@ -43,7 +43,6 @@ public class HttpMMsHandler implements HttpRequestHandler {
         }else if (method.equals("POST")) {
             if (request instanceof HttpEntityEnclosingRequest) {
                 HttpEntity entity = ((HttpEntityEnclosingRequest) request).getEntity();
-                ContentType contentType = ContentType.get(entity);
                 byte[] entityContent = EntityUtils.toByteArray(entity);
                 String content = new String(entityContent, 0, entityContent.length, "UTF-8");
                 String mm7Head = content.substring(content.indexOf("<env:Envelope"),

@@ -18,7 +18,7 @@ import java.util.concurrent.ConcurrentHashMap;
  */
 public class ConfigUtil {
     private final static Logger logger = LoggerFactory.getLogger(ConfigUtil.class);
-    private ConcurrentHashMap<String, String> cache = new ConcurrentHashMap<String, String>();
+    private final ConcurrentHashMap<String, String> cache = new ConcurrentHashMap<String, String>();
     private long fileLastModifyTime = 0;
 
     public String getConfig(String name) {
