@@ -31,7 +31,7 @@ public class ConfigUtil {
 
     public void loadConf() {
         Properties properties = new Properties();
-        File file = new File("./mmsConfig.properties");
+        File file = new File("./conf/mmsConfig.properties");
         if (!file.exists()) {
             logger.error("未找到配置文件!");
             return;
