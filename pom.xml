@@ -22,6 +22,7 @@
                 <artifactId>maven-assembly-plugin</artifactId>
                 <version>2.3</version>
                 <configuration>
+                    <finalName>Mms_Server</finalName>
                     <!-- not append assembly id of archive.xml in release file name -->
                     <appendAssemblyId>false</appendAssemblyId>
                     <descriptors>
