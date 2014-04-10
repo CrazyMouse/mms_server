@@ -20,6 +20,8 @@ import org.slf4j.LoggerFactory;
 import java.io.IOException;
 import java.util.Calendar;
 import java.util.List;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 /**
  * Title ：状态报告处理
@@ -31,6 +33,7 @@ public class DeliverProcesser {
     private ConfigUtil configUtil;
     private PoolingHttpClientConnectionManager connectionManager;
     private HttpClient httpClient;
+    private ExecutorService executorService = Executors.newFixedThreadPool(8);
 
     public void init() {
         connectionManager = new PoolingHttpClientConnectionManager();
@@ -40,23 +43,28 @@ public class DeliverProcesser {
     }
 
     public void sendDeliver(Mm7Deliver deliver) {
-        HttpPost httpPost = new HttpPost(configUtil.getConfig("url"));
+        final HttpPost httpPost = new HttpPost(configUtil.getConfig("url"));
         httpPost.addHeader("Content-Type", "text/xml;charset=\"UTF-8\"");
         httpPost.addHeader("Connection", "keep-alive");
 
-        HttpContext context = new BasicHttpContext();
+        final HttpContext context = new BasicHttpContext();
         List<String> reportXmls = DomBuilderUtil.buildReport(deliver);
-        for (String reportXml : reportXmls) {
+        for (final String reportXml : reportXmls) {
 
-            StringEntity entity = new StringEntity(reportXml, "UTF-8");
-            httpPost.setEntity(entity);
-            try {
-                HttpResponse response = httpClient.execute(httpPost, context);
-                EntityUtils.toByteArray(response.getEntity());
-                Statistic.addDeliver();
-            } catch (IOException e) {
-                logger.error("状态报告发送异常:{}", e);
-            }
+            executorService.execute(new Runnable() {
+                @Override
+                public void run() {
+                    StringEntity entity = new StringEntity(reportXml, "UTF-8");
+                    httpPost.setEntity(entity);
+                    try {
+                        HttpResponse response = httpClient.execute(httpPost, context);
+                        EntityUtils.toByteArray(response.getEntity());
+                        Statistic.addDeliver();
+                    } catch (IOException e) {
+                        logger.error("状态报告发送异常:{}", e);
+                    }
+                }
+            });
         }
     }
 
