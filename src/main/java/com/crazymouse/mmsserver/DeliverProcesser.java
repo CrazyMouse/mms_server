@@ -22,8 +22,8 @@ import java.util.Calendar;
 import java.util.List;
 
 /**
- * Title ：
- * Description :
+ * Title ：状态报告处理
+ * Description :用httpclient发送送达报告
  * Create Time: 14-3-28 下午2:12
  */
 public class DeliverProcesser {

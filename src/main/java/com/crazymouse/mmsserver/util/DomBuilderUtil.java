@@ -12,7 +12,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Title ：
+ * Title ：状态报告xml转换
  * Description :
  * Create Time: 14-3-28 下午2:18
  */

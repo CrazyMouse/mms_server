@@ -7,7 +7,7 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 /**
- * Title ：
+ * Title ：程序入口
  * Description :
  * Create Time: 14-4-4 下午2:25
  */

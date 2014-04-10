@@ -12,8 +12,8 @@ import java.util.Properties;
 import java.util.concurrent.ConcurrentHashMap;
 
 /**
- * Title ：
- * Description :
+ * Title ：配置管理工具
+ * Description :用springTask实现周期性配置重加载
  * Create Time: 14-3-28 下午2:04
  */
 public class ConfigUtil {

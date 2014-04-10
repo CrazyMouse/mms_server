@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Title ：
+ * Title ：彩信上行请求数据
  * Description :
  * Create Time: 14-3-27 下午4:09
  */

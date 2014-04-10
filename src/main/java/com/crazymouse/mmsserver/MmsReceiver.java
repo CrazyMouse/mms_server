@@ -16,7 +16,11 @@ import java.io.InterruptedIOException;
 import java.net.ServerSocket;
 import java.net.Socket;
 
-
+/**
+ * Title ：彩信服务主类
+ * Description :处理http请求
+ * Create Time: 14-3-28 下午2:12
+ */
 public class MmsReceiver {
     private final static Logger logger = LoggerFactory.getLogger(MmsReceiver.class);
     private ConfigUtil configUtil;

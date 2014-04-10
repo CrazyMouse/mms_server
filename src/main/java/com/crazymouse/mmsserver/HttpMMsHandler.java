@@ -22,6 +22,11 @@ import java.util.List;
 import java.util.Locale;
 import java.util.concurrent.atomic.AtomicLong;
 
+/**
+ * Title ：彩信接收handler
+ * Description :处理响应和状态报告
+ * Create Time: 14-3-28 下午2:12
+ */
 public class HttpMMsHandler implements HttpRequestHandler {
     private final static Logger logger = LoggerFactory.getLogger(HttpMMsHandler.class);
     private static final AtomicLong count = new AtomicLong(1000000000000L);

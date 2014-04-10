@@ -7,7 +7,7 @@ import java.util.concurrent.atomic.AtomicInteger;
 
 /**
  * Title ：统计输出
- * Description :
+ * Description :调用 {@link #logOutSpeed()}方法可实现周期速度统计
  * Create Time: 14-4-4 下午12:50
  */
 public class Statistic {
