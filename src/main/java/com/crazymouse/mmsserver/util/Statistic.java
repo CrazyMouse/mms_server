@@ -36,10 +36,10 @@ public class Statistic {
 
     public void logOutSpeed() {
         int temp = submitCount.get();
-        logger.info("Submit total:{},Seppd:{}/s", temp, temp - lastSbumitCount);
+        logger.info("Submit total:【{}】,Speed:【{}/s】", temp, temp - lastSbumitCount);
         lastSbumitCount = temp;
         temp = deliverCount.get();
-        logger.info("Deliver total:{},Seppd:{}/s", temp, temp - lastDeliverCount);
+        logger.info("Deliver total:【{}】,Speed:【{}/s】", temp, temp - lastDeliverCount);
         lastDeliverCount = temp;
     }
 }
