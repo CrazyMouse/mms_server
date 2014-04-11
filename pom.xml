@@ -43,13 +43,6 @@
         </plugins>
     </build>
     <dependencies>
-
-        <!--<dependency>-->
-        <!--<groupId>org.springframework</groupId>-->
-        <!--<artifactId>spring-context</artifactId>-->
-        <!--<version>3.2.1.RELEASE</version>-->
-        <!--</dependency>-->
-
         <dependency>
             <groupId>org.apache.httpcomponents</groupId>
             <artifactId>httpcore</artifactId>
@@ -90,6 +83,11 @@
             <groupId>org.springframework</groupId>
             <artifactId>spring-context</artifactId>
             <version>3.2.1.RELEASE</version>
+        </dependency>
+        <dependency>
+            <groupId>com.google.guava</groupId>
+            <artifactId>guava</artifactId>
+            <version>14.0</version>
         </dependency>
     </dependencies>
 </project>
